@@ -1,0 +1,69 @@
+﻿@page
+@model AddModel
+@section sidebar{
+    <div></div>
+}
+<form method="post" class="form-floating g-3 needs-validation">
+    <div class="card ms-2">
+        <div class="card-body">
+            <div class="mb-3">
+                <label class="text-muted">ASSET NAME<span class="text-danger">*</span></label>
+                <select asp-for="AssetRequest.AssetId" asp-items="@Model.Asset" class="form-control form-select" >
+                    <option value="">Select...</option>
+                </select>
+                <span asp-validation-for="AssetRequest.Asset" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="text-muted">Department</label>
+                <select asp-for="AssetRequest.DepartmentId" asp-items="@Model.Departments" class="form-control form-select" >
+                    <option value="">Select...</option>
+                </select>
+                <span asp-validation-for="AssetRequest.Department" class="text-danger"></span>
+            </div>
+@*                <div class="col-md">
+                    <div class="form-floating mb-3">
+                        <input asp-for="LeaveRequest.StartDate" type="date" class="form-control" id="floatingPassword" required>
+                        <label for="floatingPassword">Start date</label>
+                        <span asp-validation-for="LeaveRequest.StartDate"></span>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating mb-3">
+                        <input asp-for="LeaveRequest.EndDate" type="date" class="form-control" id="floatingPassword" required>
+                        <label for="floatingPassword">End date</label>
+                        <span asp-validation-for="LeaveRequest.EndDate"></span>
+                    </div>
+                </div>*@
+            <div class="form-floating mb-3">
+                <input asp-for="AssetRequest.AssetLocation" id="Description" class="form-control"/>
+                <label for="Description" class="text-muted">Asset Location</label>
+                <div class="invalid-feedback">Please provide asset location</div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+            self.Tenure.subscribe(function () {
+                if (self.Principal() && self.Tenure()) {
+                    var totalInterestAmount = ((self.Principal() * interest) / 100) * self.Tenure();
+                    var amount = parseFloat(totalInterestAmount) + parseFloat(self.Principal());
+                    self.TotalAmount(amount);
+                    self.TotalAmountText(currency + ' ' + amount);
+                    var monthlyAmount = self.TotalAmount() / self.Tenure();
+                    var monthly = monthlyAmount.toFixed(2);
+                    self.MonthlyAmount(monthly);
+                    self.MonthlyAmountText(currency + ' ' + monthly);
+                }
+            }, self);
+
+            self.canShowCalculations = ko.computed(() => {
+                return self.Principal() && self.Tenure();
+            }, self);
+        }
+    </script>
+}

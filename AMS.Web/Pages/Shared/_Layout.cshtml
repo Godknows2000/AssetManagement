@@ -1,0 +1,91 @@
+﻿@using X.PagedList.Mvc.Core.Common;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Asset Management</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AMS.Web.styles.css" asp-append-version="true" />
+    <partial name="_Styles" />
+</head>
+<body>
+@*        @if (ViewBag.SideNavPath != null)
+        {
+            <nav id="sidebar" class="d-print-none active" style="margin-top:40px">
+                <partial name="@ViewBag.SideNavPath" />
+            </nav>
+        }*@
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top box-shadow py-0">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/images/wcyber-logo-white.png" style="height:24px" alt="Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex ">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item active">
+                            <a class="nav-link " asp-area="" asp-page="/Index"><i class="fa-solid fa-house icon-color"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-page="/HowItWorks"><i class="fa-solid fa-circle-question icon-color"></i> How it works</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Contact"><i class="fa-solid fa-phone icon-color"></i> Contact us</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    @*    <div style="position:absolute; top:57px">
+    <img src="~/images/banner-1.jpg" style="width:100%" />
+    </div>
+    *@
+    <div class="container">
+        <main role="main" class="pb-3">
+            @if (ViewData["PageTitle"] != null)
+            {
+                    <h3 class="fw-normal pt-3 @(ViewBag.PageSubTitle!=null ?"mb-0":"mb-2")">@ViewData["PageTitle"]</h3>
+            }
+            @if (ViewBag.PageSubTitle != null)
+            {
+                    <h4 class="fw-light @(ViewBag.PageTitle==null ?"mt-5":"")">@ViewData["PageSubTitle"]</h4>
+            }
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-dark text-white-50">
+        <hr class="bg-dark" />
+        <div class="text-white-50 ms-4 small">
+            <span>
+                &copy;@DateTime.Now.Year <a target="_blank" class="text-white" href="http://www.wcyber.net"></a>
+                <img src="~/wcyber-logo.png" style="height:36px" />
+                <span class="text-white">Asset Management System</span>
+            </span>
+            <i class="mdi mdi-circle small text-white-50"></i>
+            @*<span><a href="#" class="text-blue">Privacy policy</a></span>*@
+            <i class="mdi mdi-circle small"></i>
+            <span><a href="#" class="text-blue">Terms and conditions</a></span>
+            <div class="float-end">
+                <a class="btn btn-outline-light btn-sm" href="#">Sign-in <i class="mdi mdi-login-variant"></i></a>
+                <a class="btn btn-outline-light btn-sm" href="#">Register <i class="mdi mdi-account-plus"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="_Scripts" />
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

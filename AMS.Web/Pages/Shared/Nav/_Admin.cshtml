@@ -1,0 +1,20 @@
+﻿@{
+    var area = ViewContext.RouteData.Values["area"]?.ToString().ToLower();
+}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-page="/Index"><i class="fa fa-home icon-color"></i> Home</a>
+    </li>
+    <li class="nav-item @(area == "users" ? "active" : "")">
+        <a class="nav-link" asp-area="Users" asp-page="/Index"><i class="fa fa-users icon-color"></i> Users</a>
+    </li>
+    <li class="nav-item @(area == "assets" ? "active" : "")">
+        <a class="nav-link" asp-area="Config" asp-page="/Assets/Index"><i class="fa-solid fa-briefcase icon-color"></i> Assets</a>
+    </li>
+    <li class="nav-item @(area == "assetrequest" ? "active" : "")">
+        <a class="nav-link" asp-area="AssetRequest" asp-page="/Index"><i class="fa-solid fa-folder-open icon-color"></i> Asset request</a>
+    </li>
+    <li class="nav-item @(area == "config" ? "active" : "")">
+        <a class="nav-link" asp-area="Config" asp-page="/Index"><i class="fa fa-cogs icon-color"></i> Config</a>
+    </li>
+</ul>

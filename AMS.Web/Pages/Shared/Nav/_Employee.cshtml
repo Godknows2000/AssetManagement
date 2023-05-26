@@ -1,0 +1,12 @@
+﻿@{
+    var area = ViewContext.RouteData.Values["area"]?.ToString()!.ToLower();
+    var page = ViewContext.RouteData.Values["page"]?.ToString()!.ToLower();
+}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-page="/Index"><i class="fa fa-home icon-color"></i> Home</a>
+    </li>
+    <li class="nav-item @(area == "assetrequest" && !page.Contains("/leases") ? "active" : "")">
+        <a class="nav-link" asp-area="AssetRequest" asp-page="/Add"><i class="fa-solid fa-hand-holding-medical icon-color"></i> Apply for asset</a>
+    </li>
+</ul>

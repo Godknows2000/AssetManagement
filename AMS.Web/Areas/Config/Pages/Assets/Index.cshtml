@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+
+<table class="table table-sm table-striped table-hover border-bottom">
+    <thead>
+        <tr>
+            <th>Asset ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Creation Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.List)
+        {
+            <tr>
+                <td><a asp-page="./Details" asp-route-id="@item.Id">@item.AssetId</a></td>
+                <td>@item.Name</td>
+                <td>@item.Department?.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Status</td>
+                <td>@item.CreationDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

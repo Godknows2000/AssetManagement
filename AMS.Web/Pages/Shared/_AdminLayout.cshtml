@@ -1,0 +1,149 @@
+﻿@using X.PagedList.Mvc.Core.Common;
+@{
+    var area = ViewContext.RouteData.Values["area"]?.ToString().ToLower();
+    var page = ViewContext.RouteData.Values["page"]?.ToString().ToLower();
+    var hasSideBar = IsSectionDefined("sidebar");
+    var hasSubTitle = ViewData["PageSubTitle"] != null;
+    var hasPageTitle = ViewData["PageTitle"] != null;
+    var hasActionBar = ViewData["ActionBar"] != null && ((PageActionBar)ViewBag.ActionBar).Items.Any();
+    var hasBreadCrumb = ViewData["BreadCrumb"] != null && ((BreadCrumb)ViewBag.BreadCrumb).Items.Any();
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - wCyber Asset Management Portal</title>
+    <partial name="_Styles" />
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top box-shadow py-0">
+            <div class="container-fluid">
+                @if (ViewBag.SideNavPath != null)
+                {
+                    <div class="navbar-brand" id="menu-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                }
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/images/wcyber-logo-white.png" style="height:24px" alt="Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <partial name="Nav/@ViewBag.TopNavPath" />
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    @if (ViewBag.SideNavPath != null && !string.IsNullOrWhiteSpace(ViewBag.SideNavPath))
+    {
+        <div class="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+            <div class="d-flex flex-column flex-shrink-0 py-3">
+                <partial name="@ViewBag.SideNavPath" />
+                <hr />
+            </div>
+        </div>
+    }
+    <div class="">
+        <main role="main" class="my-container active-cont">
+            <div class="@(hasSideBar?"row":"")">
+                <div class="@(hasSideBar?"col-lg-9":"")">
+                    @if (hasActionBar || hasBreadCrumb)
+                    {
+                        <div class="navbar navbar-expand-lg px-0 navbar-dark d-print-none">
+                            @if (hasBreadCrumb)
+                            {
+                                <div class="breadcrumb px-2 py-2 m-0 small" style="background: none !important">@Url.Render((BreadCrumb)ViewBag.BreadCrumb)</div>
+                            }
+                            @if (hasActionBar)
+                            {
+                                <div class="ms-auto p-2 navbar-nav" style="">@Url.Render((PageActionBar)ViewBag.ActionBar)</div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="m-2"></div>
+                    }
+                    <div class="row">
+                        <div class="col-md">
+                            @if (ViewData["PageTitle"] != null)
+                            {
+                                <h3 class="px-2 mt-0 @(hasSubTitle?"mb-0":"")">@ViewData["PageTitle"]</h3>
+                            }
+                            @if (ViewData["PageSubTitle"] != null)
+                            {
+                                <h5 class="px-2 @(hasPageTitle?"mt-0":"")">@ViewData["PageSubTitle"]</h5>
+                            }
+                        </div>
+                        @if (ViewData["SearchPlaceholder"] != null)
+                        {
+                            <div class="col-md">
+                                <div style="max-width:250px" class="px-2 ms-auto">
+                                    <form method="get">
+                                        <div class="input-group">
+                                            <input type="search" placeholder="@ViewData["SearchPlaceholder"]" name="q" value="@ViewData["QueryString"]" class="form-control" />
+                                            <button class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div style="@(ViewBag.FlushBody==true ?"margin: 0 -.75rem":"")">
+                        @if (ViewBag.QueryString != null)
+                        {
+                            <div class="mb-1 text-secondary">
+                                <i class="fa fa-search"></i> You searched for "<span class="fw-bold">@ViewBag.QueryString</span>"
+                                <a href="@Url.Query(new{q=""})" class="btn btn-outline-secondary btn-sm"><i class="fa fa-times"></i> Clear search</a>
+                            </div>
+                        }
+                        @RenderBody()
+                        @if (Model.GetType().BaseType.IsGenericType && Model.GetType().BaseType.GetGenericTypeDefinition().IsAssignableFrom(typeof(SysListPageModel<>)))
+                        {
+                            @Html.PagedListPager((IPagedList)Model.List, p => Url.Query(new { p, q = Model.QueryString }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link", "border-secondary" } })
+                        }
+                    </div>
+                </div>
+                @if (hasSideBar)
+                {
+                    <div class="col-lg-3 bg-white py-2" style="min-height: 75vh;">
+                        @RenderSection("sidebar")
+                    </div>
+                }
+            </div>
+        </main>
+    </div>
+    <footer class="border-top footer text-muted bg-dark text-white-50">
+        <hr class="bg-dark" />
+        <div class="text-white-50 ms-4 small">
+            <span>
+                &copy;@DateTime.Now.Year <a target="_blank" class="text-white" href="http://www.wcyber.net"></a>
+                <img src="~/wcyber-logo.png" style="height:36px" />
+                <span class="text-white">Asset Management System</span>
+            </span>
+            <i class="mdi mdi-circle small text-white-50"></i>
+            @*<span><a href="#" class="text-blue">Privacy policy</a></span>*@
+            <i class="mdi mdi-circle small"></i>
+            <span><a href="#" class="text-blue">Terms and conditions</a></span>
+        </div>
+    </footer>
+    <partial name="_Scripts" />
+    @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+        var menu_btn = document.querySelector("#menu-btn");
+        var sidebar = document.querySelector("#sidebar");
+        var container = document.querySelector(".my-container");
+        menu_btn.addEventListener("click", () => {
+            sidebar.classList.toggle("active-nav");
+            container.classList.toggle("active-cont");
+        });</script>
+</body>
+</html>

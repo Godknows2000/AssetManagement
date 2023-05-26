@@ -1,0 +1,110 @@
+﻿@model Asset
+@{
+    var editMode = Model?.Id != null;
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label>Asset ID</label>
+                                <input asp-for="AssetId" type="text" required class="form-control" />
+                                <span asp-validation-for="AssetId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md ms-2">
+                            <div class="form-group">
+                                <label>Barcode</label>
+                                <input asp-for="Barcode" type="text" required class="form-control" />
+                                <span asp-validation-for="Barcode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label>Name</label>                          
+                                <input asp-for="Name" type="text" required class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md ms-2">
+                            <div class="form-group">
+                                <label>Model</label>
+                                <input asp-for="Model" type="text" required class="form-control" />
+                                <span asp-validation-for="Model" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label>Price</label>                          
+                                <input asp-for="Price" type="text" required class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md ms-2">
+                            <div class="form-group">
+                                <label>Department<i class="text-danger">*</i></label>
+                                <select asp-for="DepartmentId" required class="form-control" asp-items="@ViewBag.Departments">
+                                    <option value="">Select..</option>
+                                </select>
+                                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label>Category</label>                          
+                                <input asp-for="Category" type="text" required class="form-control" />
+                                <span asp-validation-for="Category" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md ms-2">
+                            <div class="form-group">
+                                <label>Supplier<i class="text-danger">*</i></label>
+                                <select asp-for="SupplierId" required class="form-control" asp-items="@ViewBag.Suppliers">
+                                    <option value="">Select..</option>
+                                </select>
+                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-2">
+                        <label for="formFile" class="form-label">Image</label>
+                        <input class="form-control" type="file" id="formFile" accept="*/image" >
+                    </div>
+                    <div class="mb-3 mt-2">
+                        <label for="formFile" class="form-label">Asset receipt</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="mt-2">
+                        <label>Description</label>
+                        <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                    </div>
+                    <div class="row mb-2 mt-2">
+                        <label class="col-md-3">Activate asset?</label>
+                        <div class="col-md-9">
+                            <input asp-for="Status" type="checkbox" checked />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,46 @@
+﻿@page
+@model ApproveModel
+@section sidebar{
+    <div></div>
+}
+<div class="card">
+    <div class="card-body">
+        @if (!User.IsEmployee())
+        {
+            <div class="row mb-3">
+                <label class="col-md-4">Employee</label>
+                <div class="col-md-8">@Model.AssetRequest.Employee?.FullName</div>
+            </div>
+        }
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Asset Name</label>
+            <div class="col-md-8">@Model.AssetRequest.Asset?.Name</div>
+        </div>
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Department</label>
+            <div class="col-md-8">@Model.AssetRequest.Department?.Name</div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-md-4">Number of days</label>
+            <div class="col-md-8">@Model.AssetRequest.AssetLocation</div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-md-4">Leave Request status</label>
+            <div class="col-md-8">@Model.AssetRequest.Status.Humanize()</div>
+        </div>
+        @if (User.IsTechSupport())
+        {
+            <form method="post">
+                <div class="mb-2">
+                    <label class="mb-0">Comments</label>
+                    <textarea rows="3" name="Comments" class="form-control"></textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a asp-page="./Details" asp-route-id="@Model.AssetRequest.Id" class="btn btn-sm btn-dark mt-2 ms-3"><i class="fa-solid fa-xmark"></i> Back</a>
+                    <button class="btn btn-sm btn-success mt-2"><i class="fa-solid fa-circle-check"></i> Approve</button>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+

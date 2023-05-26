@@ -1,0 +1,107 @@
+﻿@page "{id}"
+@model DetailsModel
+@section sidebar{
+    <div class="list-group-flush list-group border-bottom" style="width:100%">
+        @if (User.IsEmployee() && !Model.AssetRequest.IsApproved && !Model.AssetRequest.IsCanceled)
+        {
+            <a class="list-group-item list-group-item-light justify-content-between d-flex align-items-center list-group-item-action" asp-page="Cancel" asp-route-id="@Model.AssetRequest.Id"><span class="text-danger">Cancel this application</span><i class="fa fa-times text-danger"></i></a>
+        }
+        <a class="list-group-item list-group-item-light justify-content-between d-flex align-items-center list-group-item-action" target="_blank" asp-page-handler="Preview" asp-route-id="@Model.AssetRequest.Id"><span>Preview</span><i class="fa fa-print"></i></a>
+        <a class="list-group-item list-group-item-light justify-content-between d-flex align-items-center list-group-item-action" asp-page-handler="Download" asp-route-id="@Model.AssetRequest.Id"><span>Download</span><i class="fa fa-download"></i></a>
+    </div>
+    <partial name="_Notes" model="@Model.AssetRequest.GetNotes()" />
+}
+@if (!User.IsEmployee())
+{
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    @Model.Employee.FullName
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class=" d-flex flex-row " style="height:140px;">
+                        <div class="ms-3" style="margin-top: 30px;">
+                            <h5 class="mb-0 fw-bold">@Model.Employee.AccountId</h5>
+                            <h5 class="mb-0">@Model.Employee.FullName</h5>
+                            <div class="">@Model.Employee.Position | wCyber Solutions</div>
+                            <div class="small">@Model.Employee.User.Email</div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        @if (Model.Employee.IsProfileInReview)
+                        {
+                            <div class="alert alert-warning shadow-sm my-3 border-warning">
+                                <h4 class="my-0">Pending approval</h4>
+                                <h5 class="my-0">This profile is now waiting for review</h5>
+                            </div>
+                        }
+                        @*<div class="">
+                            <div class="mt-3 h5">Personal documents</div>
+                            <ul class="small mb-0">
+                                @foreach (var item in Model.Employee.Employer.AttachmentTypes)
+                                {
+                                    var isUploaded = Model.Employee.GetAttachments().Any(c => c.TypeId == item.Id);
+                                    <li>
+                                        <i class="fa fa-@(isUploaded ? "check text-success" : "clock text-muted") "></i>
+                                        @if (isUploaded)
+                                        {
+                                            <a asp-area="Employees" asp-page="/Attachments/Details" asp-route-id="@Model.Employee.Id" asp-route-FileId="@Model.Employee.GetAttachments().FirstOrDefault(c => c.TypeId == item.Id).Id">@item.Name</a>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.Name</span>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card mt-3">
+    <div class="card-body">
+        @if (!User.IsEmployee())
+        {
+            <div class="row mb-3">
+                <label class="col-md-4">Employer</label>
+                <div class="col-md-8"><a asp-page="/Details" asp-area="Employers" asp-route-id="@Model.AssetRequest.Employee">wCyber Solutions</a></div>
+            </div>
+        }
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Asset name</label>
+            <div class="col-md-8">@Model.AssetRequest.Asset?.Name</div>
+        </div>
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Department</label>
+            <div class="col-md-8">@Model.AssetRequest.Department?.Name</div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-md-4">Asset Location</label>
+            <div class="col-md-8">@Model.AssetRequest.AssetLocation</div>
+        </div>
+@*        @if (!string.IsNullOrWhiteSpace(Model.LeaveRequest.RequestComments))
+        {
+            <div class="row mb-3">
+                <label class="col-md-4">Leave request comments </label>
+                <div class="col-md-8">@Model.LeaveRequest.RequestComments</div>
+            </div>
+        }*@
+        <div class="row mb-3">
+            <label class="col-md-4">Asset request status</label>
+            <div class="col-md-8">@Model.AssetRequest.Status.ToHtml()</div>
+        </div>
+        @if (User.IsTechSupport() && Model.AssetRequest.Status == AssetStatus.AWAITING_APPROVAL)
+        {
+            <a class="btn btn-sm btn-success mt-2" asp-page="./Approve" asp-route-id="@Model.AssetRequest.Id"><i class="fa-solid fa-circle-check"></i> Approve</a>
+            <a class="btn btn-sm btn-danger mt-2 ms-3" asp-page="./Reject" asp-route-id="@Model.AssetRequest.Id"><i class="fa-solid fa-xmark"></i> Reject</a>
+        }
+    </div>
+</div>

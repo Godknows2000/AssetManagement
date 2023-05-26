@@ -1,0 +1,33 @@
+﻿@{
+    var page = ViewContext.RouteData.Values["page"]?.ToString().ToLower();
+}
+<div class="pt-3 text-dark h4 px-2"><i class="fa fa-cogs text-primary"></i> Config</div>
+<hr class="p-0 m-0" />
+<ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item @(page.Contains("asset")?"active":"")">
+        <a asp-area="Config" asp-page="/Assets/Index" class="nav-link">
+            <i class="fa-solid fa-briefcase me-2"></i> Assets
+        </a>
+    </li>
+    <li class="nav-item @(page.Contains("titles")?"active":"")">
+        <a asp-area="Config" asp-page="/Titles/Index" class="nav-link">
+            <i class="fa-solid fa-user-tie me-2"></i> Titles
+        </a>
+    </li>
+    <li class="nav-item @(page.Contains("department")?"active":"")">
+        <a asp-area="Config" asp-page="/Department/Index" class="nav-link">
+            <i class="fa-solid fa-briefcase me-2"></i> Departments
+        </a>
+    </li>
+    <li class="nav-item @(page.Contains("suppliers")?"active":"")">
+        <a asp-area="Config" asp-page="/Suppliers/Index" class="nav-link">
+            <i class="fa-solid fa-truck-field me-2"></i> Suppliers
+        </a>
+    </li>
+    <li class="nav-item @(page.Contains("email")?"active":"")">
+        <a asp-area="Config" asp-page="/Email/Index" class="nav-link">
+            <i class="fa-solid fa-envelope me-2"></i>
+            Email config
+        </a>
+    </li>
+</ul>

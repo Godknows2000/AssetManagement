@@ -1,0 +1,45 @@
+﻿@page
+@model CancelModel
+@section sidebar{
+    <div></div>
+}
+<div class="card border-danger">
+    <div class="card-body">
+        @if (!User.IsEmployee())
+        {
+            <div class="row mb-3">
+                <label class="col-md-4">Employee</label>
+                <div class="col-md-8">@Model.AssetRequest.Employee?.FullName</div>
+            </div>
+        }
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Asset Name</label>
+            <div class="col-md-8">@Model.AssetRequest.Asset?.Name</div>
+        </div>
+        <div class="row mb-3 fw-bold">
+            <label class="col-md-4">Department</label>
+            <div class="col-md-8">@Model.AssetRequest.Department?.Name</div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-md-4">Number of days</label>
+            <div class="col-md-8">@Model.AssetRequest.AssetLocation</div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-md-4">Leave Request status</label>
+            <div class="col-md-8">@Model.AssetRequest.Status.Humanize()</div>
+        </div>
+        @if ( User.IsEmployee())
+        {
+            <form method="post">
+                <div class="mb-2">
+                    <label class="mb-0">Cancellation reason</label>
+                    <textarea rows="3" name="Comments" class="form-control"></textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a asp-page="./Details" asp-route-id="@Model.AssetRequest.Id" class="btn btn-sm btn-dark mt-2 ms-3"><i class="fa-solid fa-chevron-left"></i> Back</a>
+                    <button class="btn btn-sm btn-danger mt-2"><i class="fa-solid fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        }
+    </div>
+</div>

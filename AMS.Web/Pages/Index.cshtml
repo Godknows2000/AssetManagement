@@ -1,0 +1,151 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@if (User.IsTechSupport())
+{
+    <div class="row mb-4 mt-3 ms-3 me-3" id="cards">
+                    <div class="col-12 col-lg-6 col-xl">
+                        <div class="shadow-sm card">
+                            <a asp-area="Users" asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                                Users
+                                            </h6>
+                                            <span class="h2 mb-0 counter">
+                                                @Model.Users.Count()
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fas fa-user-friends"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl">
+
+                        <!-- Value  -->
+                        <div class="shadow-sm card">
+                            <a asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                               Assets
+                                            </h6>
+                                            <span class="h2 mb-0 counter">
+                                                8
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fa-solid fa-briefcase"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl">
+                        <div class="shadow-sm card">
+                            <a asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                                Assets Status
+                                            </h6>
+                                            <span class="h5 mb-0 counter text-success">
+                                                Active : 5
+                                            </span>
+                                            <span class="h5 mb-0 counter text-danger">
+                                                Deactive : 2
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fa-brands fa-searchengin" style="color:green"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+    </div>
+    <div class="row mb-4 mt-3 ms-3 me-3" id="cards">
+                    <div class="col-12 col-lg-6 col-xl">
+                        <div class="shadow-sm card">
+                            <a asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                                Assets Issued
+                                            </h6>
+                                            <span class="h2 mb-0 counter">
+                                                0
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fa-solid fa-file-circle-check" style="color:dodgerblue"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl">
+
+                        <!-- Value  -->
+                        <div class="shadow-sm card">
+                            <a asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                               Departments
+                                            </h6>
+                                            <span class="h2 mb-0 counter">
+                                                @Model.Departments.Count()
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fa-solid fa-briefcase"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl">
+
+                        <!-- Value  -->
+                        <div class="shadow-sm card">
+                            <a asp-page="/Index">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-0">
+                                        <div class="col">
+                                            <h6 class="text-uppercase text-muted mb-2">
+                                               Suppliers
+                                            </h6>
+                                            <span class="h2 mb-0 counter">
+                                                @Model.Suppliers.Count()
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="h2 text-muted mb-0"><i class="fa-solid fa-truck-field"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+    </div>
+}
